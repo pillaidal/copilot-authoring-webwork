@@ -1,3 +1,4 @@
+<meta name="msvalidate.01" content="0E2FE2A06EF581FC885F37D7B409D14C" />
 # WeBWorK PG Authoring Knowledge for Copilot
 
 This repository contains public reference material intended to help Microsoft Copilot author, review, debug, and migrate WeBWorK problems written in the PG language.
