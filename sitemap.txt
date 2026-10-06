@@ -1,0 +1,5 @@
+https://pillaidal.github.io/copilot-authoring-webwork/
+https://pillaidal.github.io/copilot-authoring-webwork/START_HERE_WITH_COPILOT.md
+https://pillaidal.github.io/copilot-authoring-webwork/WeBWorK_PG_Copilot_Instructions.md
+https://pillaidal.github.io/copilot-authoring-webwork/filelist.txt
+https://pillaidal.github.io/copilot-authoring-webwork/pg_macro_index.txt
