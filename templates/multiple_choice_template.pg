@@ -1,0 +1,23 @@
+## DESCRIPTION
+## RadioButtons starter template
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","parserRadioButtons.pl","PGcourse.pl");
+Context("Numeric");
+
+$correct = "A function can have at most one output for each allowed input.";
+$radio = RadioButtons([
+    $correct,
+    "A function must have exactly one input.",
+    "Every function must be linear.",
+    "A function cannot contain parameters."
+],$correct,labels=>"ABC",displayLabels=>1);
+
+BEGIN_PGML
+### Multiple-choice starter
+Which statement is correct?
+
+[_]{$radio}
+END_PGML
+ANS($radio->cmp);
+ENDDOCUMENT();

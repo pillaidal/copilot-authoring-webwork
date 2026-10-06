@@ -1,0 +1,23 @@
+## DESCRIPTION
+## Numeric-answer starter template
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","PGcourse.pl");
+Context("Numeric");
+
+# Randomize from a valid mathematical structure.
+$a = random(2,9,1);
+$b = random(2,9,1);
+$answer = $a*$b;
+
+$ans = Real($answer)->cmp(tolType=>'absolute', tolerance=>0);
+
+BEGIN_PGML
+### Numeric starter
+Calculate [`[$a]\times[$b]`].
+
+[_________]{$ans}
+END_PGML
+
+ANS($ans);
+ENDDOCUMENT();

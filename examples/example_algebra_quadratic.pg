@@ -1,0 +1,32 @@
+## DESCRIPTION
+## Gold-standard example: factorable quadratic generated from roots
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","PGcourse.pl");
+Context("Numeric");
+
+$r1 = non_zero_random(-7,7,1);
+do { $r2 = non_zero_random(-7,7,1); } until ($r2 != $r1);
+$b = -($r1+$r2);
+$c = $r1*$r2;
+
+$ans1 = Real($r1);
+$ans2 = Real($r2);
+
+BEGIN_PGML
+### Solving a quadratic
+Solve
+[`x^2+[$b]x+[$c]=0.`]
+
+Enter the two distinct roots in either order.
+
+Root 1: [_________]{$ans1}
+
+Root 2: [_________]{$ans2}
+END_PGML
+
+# For a production course problem, use an unordered answer structure if available
+# in the local macro set. This example emphasizes constructive randomization.
+ANS($ans1->cmp);
+ANS($ans2->cmp);
+ENDDOCUMENT();

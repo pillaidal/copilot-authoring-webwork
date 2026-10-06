@@ -1,0 +1,27 @@
+## DESCRIPTION
+## CheckboxList multiple-selection starter template
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","parserCheckboxList.pl","PGcourse.pl");
+Context("Numeric");
+
+$c1 = "The mean is affected by extreme observations.";
+$c2 = "The median is a measure of centre.";
+$c3 = "A standard deviation can be negative.";
+$c4 = "The variance has squared measurement units.";
+
+$checks = CheckboxList(
+    [$c1,$c2,$c3,$c4],
+    [$c1,$c2,$c4],
+    labels=>"ABCD",
+    displayLabels=>1
+);
+
+BEGIN_PGML
+### Multiple-selection starter
+Select all correct statements.
+
+[_]{$checks}
+END_PGML
+ANS($checks->cmp);
+ENDDOCUMENT();

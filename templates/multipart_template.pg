@@ -1,0 +1,31 @@
+## DESCRIPTION
+## Multipart/scaffolded starter template
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","parserRadioButtons.pl","PGcourse.pl");
+Context("Numeric");
+
+$x = random(2,8,1);
+$a = random(2,6,1);
+$y = $a*$x;
+$ans_y = Real($y)->cmp(tolType=>'absolute',tolerance=>0);
+$correct = "Multiply the input by the constant.";
+$radio = RadioButtons([$correct,"Add the input to the constant.","Square the input first."],$correct,labels=>"ABC",displayLabels=>1);
+
+BEGIN_PGML
+### Multipart starter
+Let [`f(x)=[$a]x`].
+
+### Part a: Method
+Which operation describes the function?
+
+[_]{$radio}
+
+### Part b: Calculation
+Calculate [`f([$x])`].
+
+[_________]{$ans_y}
+END_PGML
+ANS($radio->cmp);
+ANS($ans_y);
+ENDDOCUMENT();

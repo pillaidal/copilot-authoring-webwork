@@ -1,0 +1,25 @@
+## DESCRIPTION
+## DataTable starter template
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","niceTables.pl","PGcourse.pl");
+Context("Numeric");
+
+@x = (4,7,9,12);
+$sum = 0; $sum += $_ for @x;
+$mean = $sum/scalar(@x);
+$ans = Real($mean)->cmp(tolType=>'absolute',tolerance=>0.005);
+
+@rows = (["Observation","Value"]);
+for my $i (0..$#x) { push @rows, [$i+1,$x[$i]]; }
+
+BEGIN_PGML
+### Data-table starter
+[@ DataTable(\@rows,padding=>[0.4,0.4],horizontalrules=>1,align=>'|c|c|') @]*
+
+Calculate the sample mean.
+
+[_________]{$ans}
+END_PGML
+ANS($ans);
+ENDDOCUMENT();

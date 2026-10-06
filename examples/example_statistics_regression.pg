@@ -1,0 +1,23 @@
+## DESCRIPTION
+## Gold-standard example: regression from summary cross-products
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","PGcourse.pl");
+Context("Numeric");
+
+$xbar=10; $ybar=22; $SSxx=40; $SSxy=60; $SSyy=110;
+$b1=$SSxy/$SSxx; $b0=$ybar-$b1*$xbar; $r=$SSxy/sqrt($SSxx*$SSyy); $R2=$r**2;
+$ansB1=Real($b1)->cmp(tolType=>'absolute',tolerance=>0.0005); $ansR2=Real($R2)->cmp(tolType=>'absolute',tolerance=>0.0005);
+
+BEGIN_PGML
+### Regression example
+Given [`\bar x=[$xbar]`], [`\bar y=[$ybar]`], [`SS_{xx}=[$SSxx]`], [`SS_{xy}=[$SSxy]`], and [`SS_{yy}=[$SSyy]`]:
+
+Calculate the least-squares slope [`\hat\beta_1=SS_{xy}/SS_{xx}`].
+[_________]{$ansB1}
+
+Calculate [`R^2`].
+[_________]{$ansR2}
+END_PGML
+ANS($ansB1); ANS($ansR2);
+ENDDOCUMENT();

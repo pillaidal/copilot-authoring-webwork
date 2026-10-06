@@ -1,0 +1,24 @@
+## DESCRIPTION
+## Gold-standard example: conditional probability from consistent counts
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","niceTables.pl","PGcourse.pl");
+Context("Numeric");
+
+$a_yes=random(15,25,1); $a_no=random(8,15,1);
+$b_yes=random(10,20,1); $b_no=random(12,20,1);
+$totalA=$a_yes+$a_no; $totalB=$b_yes+$b_no;
+$p=$a_yes/$totalA;
+$ans=Real($p)->cmp(tolType=>'absolute',tolerance=>0.0005);
+@rows=(["Group","Yes","No","Total"],["A",$a_yes,$a_no,$totalA],["B",$b_yes,$b_no,$totalB]);
+
+BEGIN_PGML
+### Conditional probability
+[@ DataTable(\@rows,padding=>[0.35,0.35],horizontalrules=>1,align=>'|c|c|c|c|') @]*
+
+If a randomly selected individual is known to be from Group A, calculate the probability that the response is Yes.
+
+[_________]{$ans}
+END_PGML
+ANS($ans);
+ENDDOCUMENT();

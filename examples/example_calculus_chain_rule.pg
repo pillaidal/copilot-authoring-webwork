@@ -1,0 +1,31 @@
+## DESCRIPTION
+## Gold-standard example: chain rule with symbolic MathObjects answer
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","parserRadioButtons.pl","PGcourse.pl");
+Context("Numeric");
+Context()->variables->add(x=>'Real');
+
+$a = random(2,6,1);
+$b = random(2,5,1);
+$n = random(3,6,1);
+$f = Formula("($a+$b*x^2)^$n");
+$df = $f->D('x');
+$method = "Use the chain rule, differentiating the outer power and then the inner quadratic.";
+$radio = RadioButtons([$method,"Use only the product rule.","Differentiate the exponent and leave the base unchanged."],$method,labels=>"ABC",displayLabels=>1);
+
+BEGIN_PGML
+### Chain rule
+Consider [`f(x)=[$f].`]
+
+Which method is appropriate?
+
+[_]{$radio}
+
+Find [`f'(x)`].
+
+[________________]{$df}
+END_PGML
+ANS($radio->cmp);
+ANS($df->cmp);
+ENDDOCUMENT();

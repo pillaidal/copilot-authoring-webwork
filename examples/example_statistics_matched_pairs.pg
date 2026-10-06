@@ -1,0 +1,34 @@
+## DESCRIPTION
+## Gold-standard example: matched-pairs architecture
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","parserRadioButtons.pl","niceTables.pl","PGcourse.pl");
+Context("Numeric");
+
+@Before=(72,75,78,74,80,77,73,79);
+@After =(69,73,75,72,77,75,71,76);
+$n=@Before; @D=(); $sum=0;
+for my $i (0..$n-1){$D[$i]=$After[$i]-$Before[$i];$sum+=$D[$i];}
+$meanD=$sum/$n; $ss=0; $ss+=($_-$meanD)**2 for @D; $sdD=sqrt($ss/($n-1)); $SE=$sdD/sqrt($n); $t=$meanD/$SE;
+$ansMean=Real($meanD)->cmp(tolType=>'absolute',tolerance=>0.005);
+$ansT=Real($t)->cmp(tolType=>'absolute',tolerance=>0.0005);
+$correct="The same participants are measured twice, so inference is based on within-participant differences.";
+$radio=RadioButtons([$correct,"The two samples are independent.","The data are paired only because the units match."],$correct,labels=>"ABC",displayLabels=>1);
+@rows=(["Participant","Before","After","D = After - Before"]);
+for my $i(0..$n-1){push @rows,[$i+1,$Before[$i],$After[$i],$D[$i]];}
+
+BEGIN_PGML
+### Matched-pairs example
+[@ DataTable(\@rows,padding=>[0.3,0.3],horizontalrules=>1,align=>'|c|c|c|c|') @]*
+
+Why is this paired?
+[_]{$radio}
+
+Calculate [`\bar D`].
+[_________]{$ansMean}
+
+Calculate [`t=\bar D/(s_D/\sqrt n)`].
+[_________]{$ansT}
+END_PGML
+ANS($radio->cmp); ANS($ansMean); ANS($ansT);
+ENDDOCUMENT();

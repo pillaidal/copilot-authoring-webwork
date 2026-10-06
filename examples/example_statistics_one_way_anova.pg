@@ -1,0 +1,27 @@
+## DESCRIPTION
+## Gold-standard example: one-way ANOVA from summary statistics
+## ENDDESCRIPTION
+DOCUMENT();
+loadMacros("PGstandard.pl","MathObjects.pl","PGML.pl","niceTables.pl","PGcourse.pl");
+Context("Numeric");
+
+$n=6; @means=(18.2,20.1,23.0); @sds=(2.1,2.4,2.0); $k=3; $N=$n*$k;
+$gm=0; $gm+=$n*$_ for @means; $gm/=$N;
+$SStr=0; $SSE=0;
+for my $i(0..2){$SStr+=$n*($means[$i]-$gm)**2;$SSE+=($n-1)*$sds[$i]**2;}
+$dftr=$k-1; $dfe=$N-$k; $MStr=$SStr/$dftr; $MSE=$SSE/$dfe; $F=$MStr/$MSE;
+$ansSS=Real($SStr)->cmp(tolType=>'absolute',tolerance=>0.005); $ansF=Real($F)->cmp(tolType=>'absolute',tolerance=>0.0005);
+@rows=(["Group","n","Mean","SD"],["A",$n,$means[0],$sds[0]],["B",$n,$means[1],$sds[1]],["C",$n,$means[2],$sds[2]]);
+
+BEGIN_PGML
+### One-way ANOVA example
+[@ DataTable(\@rows,padding=>[0.3,0.3],horizontalrules=>1,align=>'|c|c|c|c|') @]*
+
+Calculate [`SS_{Tr}=\sum n_i(\bar X_i-\bar X_{..})^2`].
+[_________]{$ansSS}
+
+Calculate [`F=MS_{Tr}/MSE`].
+[_________]{$ansF}
+END_PGML
+ANS($ansSS); ANS($ansF);
+ENDDOCUMENT();
