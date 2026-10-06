@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistics Macros Index</title>
+</head>
+<body>
+    <a href="index.html">← Back to Master Index</a>
+    <h1>Statistics Specialized Macro Modules</h1>
+    <section id="deprecated_regrfnsPG_pl">
+        <h2>deprecated/regrfnsPG.pl</h2>
+        <pre><code>
+# functions for simple linear regression in perl
+#/* "a","b" are the two endpoints of the range of
+#   random integers to be produced. */
+# inputs $a,$b are integers
+#sub rndgen
+#{ local($a,$b,$r);
+#  $a=$_[0]; $b=$_[1];
+#  $r=rand($b-$a+1); # in (0,b-a+1)
+#  #print $a," ",$b," ",$r,"\n";
+#  $r=int($r)+$a; # between a,b inclusive
+#  $r;
+#}
+# N (size of population) and ssize (sample size) are inputs
+# simple linear regression
+# input xvec, yvec : assumed as one vector here
+# output ($n,$xbar,$ybar,$sx2,$sy2,$sxy,$b0,$b1,$sse,$mse,$x0);
+# subpopulation mean at x0
+#sqrt(mse*(1/n+(x0-xbar)^2/((n-1)*sx2)))
+# input : output of lsreg, plus x0
+#  or ($n,$xbar,$ybar,$sx2,$sy2,$sxy,$b0,$b1,$sse,$mse,$x0);
+# output: point estimate and SE
+#prediction interval at x=x0
+#sqrt(mse*(1+1/n+(x0-xbar)^2/((n-1)*sx2)))
+# input : output of lsreg, plus x0
+# ($n,$xbar,$ybar,$sx2,$sy2,$sxy,$b0,$b1,$sse,$mse,$x0);
+# output: point estimate and SE
+        </code></pre>
+    </section>
+<hr>
+    <section id="graph_PGstatisticsGraphMacros_pl">
+        <h2>graph/PGstatisticsGraphMacros.pl</h2>
+        <pre><code>
+#my $User = $main::studentLogin;
+#my $psvn = $main::psvn; #$main::in{'probSetKey'};  #in{'probSetNumber'}; #$main::probSetNumber;
+#my $setNumber     = $main::setNumber;
+#my $probNum       = $main::probNum;
+##############################################################################################
+# this accomplishes the following:
+#   a) clears the accumulated statistical data,
+#   b) Create three random, normally distributed, and one exponentially dist. data sets.
+#   c) Add the data set to the collection of data
+#   d) initializes a statistical graph object
+#   e) adds the relevant box plots.
+##############################################################################################
+#   clear_stat_graph_data();         # (a)
+#
+#   @data1 = urand(10.0,2.0,10,2);   # (b) - mean=10, sd=2.0, N=10, 2 dec places
+#   @data2 = urand(12.0,2.0,10,2);   # (b) - mean=12, sd=2.0
+#   @data3 = urand(14.0,4.0,10,2);   # (b) - mean=14, sd=4.0
+#   @data4 = exprand(0.1,10,2);      # (b) - lambda=0.1, N=10, and 2 dec places (exp)
+#
+#   push_stat_data_set(~~@data1);    # (c)
+#   push_stat_data_set(~~@data2);    # (c)
+#   push_stat_data_set(~~@data3);    # (c)
+#   push_stat_data_set(~~@data4);    # (c)
+#
+#   # Now initialize the graph (d) and add the box plots (e)
+#   $graph = init_statistics_graph(axes=&gt;[0,0.0],ticks=&gt;[10]);
+#   $bounds = add_boxplot($graph,{"outliers"=&gt;1});
+#   # or #
+#   $bounds = add_histogram($graph,10,1);  # add a histogram with 10 bins and a multipler of 1.
+#                                          # The multiplier is for the height of the frequencies.
+#                                          # ex: if the multiplier is 2 the graph is twice as tall
+#
+###############################################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="math_PGnauSet_pl">
+        <h2>math/PGnauSet.pl</h2>
+        <pre><code>
+#######################################################################################################
+#
+# Name : DrawVenn2
+#
+# Input		:
+#
+#			$input_word 	=	'region1_info, region2_info, ...'
+#						The information to use, arranged in order by region.
+#						Use "_fill_" to shade the corresponding region, otherwise
+#						the input is treated as label.
+#
+#			@options	=	'Arrow indicated options' in any order.
+#
+#						  labels=&gt;'Set1 label, Set2 label, U'.  Set1 is on the
+#							  left.  Leaving any or all entries blank will
+#							  produce no label for that item.  Default is
+#							  'A,B,U'
+#
+# Output 	:	$diagram   	= 	a graphics object, the diagram to plot.  Use 'Plot' in the
+#						.pg file.
+#
+########################################################################################################
+#######################################################################################################
+#
+# Name : DrawVenn3
+#
+# Input		:
+#
+#			$input_word 	=	'region1_info, region2_info, ...'
+#						The information to use, arranged in order by region.
+#						Use "_fill_" to shade the corresponding region, otherwise
+#						the input is treated as label.
+#
+#			@options	=	'Arrow indicated options' in any order.
+#
+#						  labels=&gt;'Set1 label, Set2 label, Set 3 label, U'.  Set1 is on the
+#							  left.  Leaving any or all entries blank will
+#							  produce no label for that item.  Default is
+#							  'A,B,C,U'
+#
+# Output 	:	$diagram   	= 	a graphics object, the diagram to plot.  Use 'Plot' in the
+#						.pg file.
+#
+########################################################################################################
+#####################################
+#
+# Name	:	Venn2answers
+#
+#
+#####################################
+#####################################
+#
+# Name	:	Venn3answers
+#
+#
+#####################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="math_PGnauStats_pl">
+        <h2>math/PGnauStats.pl</h2>
+        <pre><code>
+################################
+#Name: MeanDev
+#Input: List of data values
+#Output: List  containing mean and standard deviation
+################################
+################################
+#Name: Median
+#Input: List of data values
+#Output: Value of the median
+################################
+################################
+#Name: FiveNum
+#Input: List of data values
+#Output: List containing the five number summary in order from Low to High
+################################
+################################
+#Name: Mode
+#Input: List of data values
+#Optional Input: 'Max_Modes'=&gt; num limits the maximum number of modes to num
+#Output: List containing the mode or the list ("None") if the number of modes
+#        is more than num,
+################################
+######################################
+#Name: isstring
+#Input: A variable
+#Output: A 1 if the variable is a string, 0 otherwise
+######################################
+#########################################################################################
+#
+# Name   : BoxPlot
+# Input  : $min 	= the minimum value in the dataset
+#          $q1 		= the first quartile value
+#	   $q2 		= the second quartile (median) value
+#          $q3 		= the third quartile value
+#          $max 	= the maximum value in the dataset
+#          Options      = array of numbers to be plotted with tickmarks,
+#			  perhaps interspersed with the options below
+#			  in any order.
+#
+#	   Options ::  The following may be passed AFTER the five numbers
+#                      (together with the labels, without regard to order):
+#
+#                      (1) Use "wmin=&gt;number" (no quotes really) to set the
+#		           lower viewing window.  Default is '$min'
+#
+#		       (2) Use "wmax=&gt;number" (no quotes really) to set the
+#			   upper viewing window.  Default is '$max'
+#
+#		       (3) Use "horzlabels=&gt;number" to set the approximate
+#			   number of horizontal labels.  Default is 10.
+#
+#		       (4) Use "axis=&gt;0" to hide the horizontal axis.
+#                          Default is to plot the axis.
+#
+#                      (5) Use labels such as 'a','b' and so on to label any
+#			   of the five numbers with the desired string.
+#			   Default is no labels.
+#
+# Output : $pic = a graphics object.
+#
+#####################################################################################
+#################
+# Name : SpecialData
+# Input : A string containing the type of data desired (Exp, Sym, Bi, Norm, Left, Right)
+#	  and any optional input.
+# Optional Input : count =&gt; n : the number of data values to generate (default = 500)
+#		    mean =&gt; n : The mean for the normal, left or right distributions (default = 0)
+#		     dev =&gt; n : The standard deviation for the normal, left or right distributions (default = 1)
+#		     min =&gt; n : The minimum value for the data (default = 0)
+#		     max =&gt; n : The maximum value for the data (default = 100)
+# Output : A list of data values with the special properties.
+#################
+######################################
+#Name: PercentStemAndLeaf
+#Input: List of percentage values (anything from 0 to 100).
+#Optional Input: At beginning of list:
+#		all =&gt; 1,0 turns on or off the display of all columns of the
+#		 table (useful if data is within a small range).
+#		sort =&gt; 1,0 turns on or off sorted data rows.
+#		single=&gt;1,0 displays answers as a single cell in the table or
+#		 determines the number from the data.
+#Output: A list containing two strings.  The first is a string that represents
+#	 the html table to be displayed and the second is the TeX table to be
+#	 displayed.
+######################################
+###
+# Name	: RoundStep
+###
+###
+# Name	: CeilingStep
+###
+###
+# Name	: FloorStep
+###
+#############################################################################
+# Name   : Histogram
+# Input  : @data 	= "the data"
+#          Options      = may be interspersed in the data in any order.
+#
+#	   Options ::  The following may be passed AFTER the standard input
+#		       above (without regard to order):
+#
+#                      (1) Use "labelcells=&gt;1" (no quotes really) to include
+#		           frequency labels at the top of each cell.
+#			   The default is no labels.
+#
+#		       (2) Use "labelcount=&gt;number" (no quotes really) to
+#			   set an approximate number of labels to use on the
+#			   vertical axis.  Default is 5.
+#
+#		       (3) Use "title=&gt;string" to add a title, centered at
+#			   the top.
+#
+#		       (4) Use "axislabel=&gt;string" to add an axis label,
+#			   centered at the bottom.
+#
+#		       (5) Use "bins=&gt;number" to specify approximately how
+#			   many bins should be used.  Default is 10.
+#
+#		       Note : any extra numbers input at the end will be
+#			      taken as data.
+#
+# Output : $pic = a graphics object
+#############################################################################
+################################
+#Name: RandomNormalNumber
+#Input: None required
+#Optional Input: 'mean' =&gt; the mean of the normal distribution being used. (default = 0)
+#		  'dev' =&gt; the standard deviation of the normal distribution being used. (default = 1)
+#Output: A number that is related to the standard normal curve with the given mean and deviation.
+################################
+################################
+#Name: Scatterplot
+#Input: Correlation coefficient
+#Optional Input: 'count'=&gt; Number of data points to be calculated.
+#		 'mean' =&gt; the mean of the normal distribution being used.
+#		  'dev' =&gt; the standard deviation of the normal distribution being used.
+#		 'slope'=&gt; the slope of the scatterplot.
+#Output: A picture of the scatterplot with given slope and correlation coefficient.
+################################
+######################################
+#Name: PieChart
+#Input: List of values as: decimals - which should add to 1.  If it
+#			  	sums to less than one, the function will make up the difference.
+#			   or numbers &gt; 1 - will be treated as numerators for fractions.  The sum of the
+#				numbers will be the denominator and fractions will be placed on the
+#				circle plot.
+#Optional Input: percent =&gt; 0, 1 : Off or on display of percentage values (regardless of input manner) (default = 0)
+#		 labels =&gt; 1, 0 : On or off label display.  (default = 1)
+#		 values =&gt; 1, 0 : On or off value display. (default = 1)
+#Output: A picture of the corresponding circle plot
+######################################
+###########################################################################################################
+#
+# Name	:	DrawNormalDist
+#
+# Input : 	lower_z_point, upper_z_point (use -INF or INF for infinite values)
+#
+# Optional Input : After first two points.
+#		$lower_label = the lower label to use.  Default is 'a'
+#		$upper_label = the upper label to use.  Default is 'b'
+#		    (if only want upper label, must input a lower label)
+#		outside =&gt; n - 0, 1 to shade between or outside the numbers Default = 0;
+#		title =&gt; 'title string' - will display a title if desired.
+#		mean =&gt; n - will display the given mean (default display nothing)
+#
+###########################################################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="math_PGstatisticsmacros_pl">
+        <h2>math/PGstatisticsmacros.pl</h2>
+        <pre><code>
+#	 Usage: ($t,$df,$p) = two_sample_t_test(\@data1,\@data2);                       # Perform a two-sided t-test using a pooled variance.
+#  or:    ($t,$df,$p) = two_sample_t_test(\@data1,\@data2,{'test'=&gt;'right','variance'=&gt;'pooled});     # Perform a right sided t-test using a pooled variance
+#  or:    ($t,$df,$p) = two_sample_t_test(\@data1,\@data2,{'test'=&gt;'left','variance'=&gt;'separate'});      # Perform a left sided t-test using a separate variance
+#  or:    ($t,$df,$p) = two_sample_t_test(\@data1,\@data2,{'test'=&gt;'two-sided','variance'=&gt;'pooled}); # Perform a left sided t-test using a pooled variance
+#
+# example:
+#
+# @data1 = (1,2,3,4,5,6,7);
+# @data2 = (2,3,4,5,6,7,9);
+# ($t,$df,$p) = two_sample_t_test(2.5,\@data1,\@data2,{'test'=&gt;'right','variance'=&gt;'pooled});
+#
+        </code></pre>
+    </section>
+<hr>
+</body>
+</html>

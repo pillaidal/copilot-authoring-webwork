@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Core Macros Index</title>
+</head>
+<body>
+    <a href="index.html">← Back to Master Index</a>
+    <h1>Core Specialized Macro Modules</h1>
+    <section id="PG_pl">
+        <h2>PG.pl</h2>
+        <pre><code>
+# This loads the basic css needed by pg.
+# It is expected that the requestor will also load the styles for Bootstrap.
+# Some problems use jquery-ui still, and so the requestor should also load the css for that if those problems are used,
+# although those problems should also be rewritten to not use jquery-ui.
+# This loads the basic javascript needed by pg.
+# It is expected that the requestor will also load MathJax, Bootstrap, and jquery.
+# Some problems use jquery-ui still, and so the requestor should also load the js for that if those problems are used,
+# although those problems should also be rewritten to not use jquery-ui.
+# sageReturnedFail checks to see if the return from Sage indicates some kind of failure
+# undefined means old style return (a simple string) failed
+# $obj-&gt;{success} defined but equal to zero means that the failed return and error
+# messages are encoded in the $obj hash.
+# The store_persistent_data, update_persistent_data, and get_persistent_data methods are deprecated and are only still
+# here for backward compatability. Use the persistent_data method instead which can do everything these three methods
+# can do. Note that if you use the persistent_data method, then you will need to join the values as strings if you want
+# that. Even better pass the persistent_data method an array reference containing the values so you can avoid the hassle
+# of splitting the values when they are retrieved.
+# This stores form data (such as sticky answers), but does nothing more.
+# It's a bit of hack since we are storing these in the
+# KEPT_EXTRA_ANSWERS queue even if they aren't answers per se.
+# Creates a new array element answer name and records it.
+#FIXME -- examine the difference between insert_response and extend_response
+# For radio buttons and checkboxes.
+# This is a stub for deprecated problems that call this method.  Some of the GeoGebra
+# problems that do so actually work even though this method does nothing.
+## Problem Grader Subroutines
+#####################################
+# This is a model for plug-in problem graders
+#####################################
+# ^function install_problem_grader
+# ^uses PG_restricted_eval
+# ^uses %PG_FLAGS{PROBLEM_GRADER_TO_USE}
+#  FIXME? The following functions were taken from the former
+#  dangerousMacros.pl file and might have issues when placed here.
+#
+#  Some constants that can be used in perl expressions
+#
+# ^function i
+# ^uses $_parser_loaded
+# ^uses &amp;Complex::i
+# ^uses &amp;Value::Package
+# ^function j
+# ^uses $_parser_loaded
+# ^uses &amp;Value::Package
+# ^function k
+# ^uses $_parser_loaded
+# ^uses &amp;Value::Package
+# ^function pi
+# ^uses $_parser_loaded
+# ^uses &amp;Value::Package
+# ^function Infinity
+# ^uses $_parser_loaded
+# ^uses &amp;Value::Package
+# ^function abs
+# ^function sqrt
+# ^function exp
+# ^function log
+# ^function sin
+# ^function cos
+# ^function atan2
+#
+#  Allow these functions to be overridden without complaint.
+#  (needed for log() to implement $useBaseTenLog)
+#
+#sub log  {return CORE::log($_[0])};
+# used to be Parser::defineLog -- but that generated redefined notices
+        </code></pre>
+    </section>
+<hr>
+    <section id="ui_text2PG_pl">
+        <h2>ui/text2PG.pl</h2>
+        <pre><code>
+######################################################################
+#
+#  Sanitize a text string for use with TEXT and EV3, so that
+#  non-math text is properly displayed in HTML mode and TeX
+#  mode.  Newlines and blank lines can be converted to $BR and
+#  $PAR automatically.
+#
+#  Format:  text2PG(string [,options]);
+#
+#  where options are from among:
+#
+#    trimWhitespace =&gt; 0 or 1    Specifies if leading and trailing whitespace
+#                                is removed before processing.
+#                                  Default: 1
+#
+#    convertBlanklines =&gt; 0 or 1 Specifies whether blank lines should be
+#                                turned into paragraph breaks.
+#                                  Default: 1
+#
+#    convertNewlines =&gt; 0 or 1   Specifies whether newlines should be
+#                                turned into line breaks.
+#                                  Default: 1
+#
+#    sanitizeText =&gt; 0 or 1      Specifies whether to convert HTML and TeX
+#                                special characters to printable form
+#                                outside of math mode and commands.
+#                                  Default: 1
+#
+#    allowCommands =&gt; 0 or 1     Specifies if text within command blocks
+#                                is left unchanged (1) or not (0).
+#                                  Default: 0
+#
+#    convertDollars =&gt; 0 or 1    Specifies whether dollar signs not followed
+#                                by a letter should be replaced by ${DOLLAR}
+#                                (you only want to do this if not passing
+#                                the result through EV3 with variable
+#                                substitutions).
+#                                  Default: 0
+#
+#    doubleSlashes =&gt; 0 or 1     Specifies whether backslashes should be
+#                                doubled (in preparation for passing
+#                                into EV3).
+#                                  Default: 1
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="deprecated_parserUtils_pl">
+        <h2>deprecated/parserUtils.pl</h2>
+        <pre><code>
+# not sure why these are loaded.  They are not used in this file.  If these are loaded
+# there is an error during the load_macros.t test.
+# loadMacros("unionImage.pl", "unionTables.pl",);
+#  HTML(htmlcode)
+#  HTML(htmlcode,texcode)
+#
+#  Insert $html in HTML mode.  In TeX mode, insert nothing for the first form,
+#  and $tex for the second form.
+#
+#
+#  Begin and end &lt;TT&gt; mode
+#
+#
+#  Begin and end &lt;SMALL&gt; mode
+#
+#
+#  Block quotes
+#
+#
+#  Smart-quotes in TeX mode, regular quotes in HTML mode
+#
+#
+#  make sure all characters are displayed
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_Parser_pl">
+        <h2>core/Parser.pl</h2>
+        <pre><code>
+###########################################################################
+##
+##  Set up the functions needed by the Parser.
+##
+# ^uses $Parser::installed
+# ^uses $Value::installed
+# ^uses loadMacros
+# ^function Formula
+# ^uses Value::Package
+# ^function Compute
+# ^uses Formula
+# ^uses Value::contextSet
+# ^function Context
+# ^uses Parser::Context::current
+# ^uses %context
+#  # ^variable our %context
+# ^uses Context
+###########################################################################
+#
+# stubs for trigonometric functions
+#
+# ^package Ignore
+# ^#function sin
+# ^#uses Parser::Function::call
+#sub sin {Parser::Function-&gt;call('sin',@_)}    # Let overload handle it
+# ^#function cos
+# ^#uses Parser::Function::call
+#sub cos {Parser::Function-&gt;call('cos',@_)}    # Let overload handle it
+# ^function tan
+# ^uses Parser::Function::call
+# ^function sec
+# ^uses Parser::Function::call
+# ^function csc
+# ^uses Parser::Function::call
+# ^function cot
+# ^uses Parser::Function::call
+# ^function asin
+# ^uses Parser::Function::call
+# ^function acos
+# ^uses Parser::Function::call
+# ^function atan
+# ^uses Parser::Function::call
+# ^function asec
+# ^uses Parser::Function::call
+# ^function acsc
+# ^uses Parser::Function::call
+# ^function acot
+# ^uses Parser::Function::call
+# ^function arcsin
+# ^uses Parser::Function::call
+# ^function arccos
+# ^uses Parser::Function::call
+# ^function arctan
+# ^uses Parser::Function::call
+# ^function arcsec
+# ^uses Parser::Function::call
+# ^function arccsc
+# ^uses Parser::Function::call
+# ^function arccot
+# ^uses Parser::Function::call
+###########################################################################
+#
+# stubs for hyperbolic functions
+#
+# ^function sinh
+# ^uses Parser::Function::call
+# ^function cosh
+# ^uses Parser::Function::call
+# ^function tanh
+# ^uses Parser::Function::call
+# ^function sech
+# ^uses Parser::Function::call
+# ^function csch
+# ^uses Parser::Function::call
+# ^function coth
+# ^uses Parser::Function::call
+# ^function asinh
+# ^uses Parser::Function::call
+# ^function acosh
+# ^uses Parser::Function::call
+# ^function atanh
+# ^uses Parser::Function::call
+# ^function asech
+# ^uses Parser::Function::call
+# ^function acsch
+# ^uses Parser::Function::call
+# ^function acoth
+# ^uses Parser::Function::call
+# ^function arcsinh
+# ^uses Parser::Function::call
+# ^function arccosh
+# ^uses Parser::Function::call
+# ^function arctanh
+# ^uses Parser::Function::call
+# ^function arcsech
+# ^uses Parser::Function::call
+# ^function arccsch
+# ^uses Parser::Function::call
+# ^function arccoth
+# ^uses Parser::Function::call
+###########################################################################
+#
+# stubs for numeric functions
+#
+# ^#function log
+# ^#uses Parser::Function::call
+#sub log   {Parser::Function-&gt;call('log',@_)}    # Let overload handle it
+# ^function log10
+# ^uses Parser::Function::call
+# ^#function exp
+# ^#uses Parser::Function::call
+#sub exp   {Parser::Function-&gt;call('exp',@_)}    # Let overload handle it
+# ^#function sqrt
+# ^#uses Parser::Function::call
+#sub sqrt  {Parser::Function-&gt;call('sqrt',@_)}    # Let overload handle it
+# ^#function abs
+# ^#uses Parser::Function::call
+#sub abs   {Parser::Function-&gt;call('abs',@_)}    # Let overload handle it
+# ^function int
+# ^uses Parser::Function::call
+# ^function sgn
+# ^uses Parser::Function::call
+# ^function ln
+# ^uses Parser::Function::call
+# ^function logten
+# ^uses Parser::Function::call
+# ^package main
+# ^function log10
+# ^uses Parser::Function::call
+# ^function Factorial
+# ^uses Parser::UOP::factorial::call
+###########################################################################
+#
+# stubs for special functions
+#
+# ^#function atan2
+# ^#usesParser::Function::call
+#sub atan2 {Parser::Function-&gt;call('atan2',@_)}    # Let overload handle it
+###########################################################################
+#
+# stubs for numeric functions
+#
+# ^function arg
+# ^uses Parser::Function::call
+# ^function mod
+# ^uses Parser::Function::call
+# ^function Re
+# ^uses Parser::Function::call
+# ^function Im
+# ^uses Parser::Function::call
+# ^function conj
+# ^uses Parser::Function::call
+###########################################################################
+#
+# stubs for vector functions
+#
+# ^function norm
+# ^uses Parser::Function::call
+# ^function unit
+# ^uses Parser::Function::call
+#
+# These are defined in PG.pl (since they call eval())
+#
+# sub i () {Compute('i')}
+# sub j () {Compute('j')}
+# sub k () {Compute('k')}
+###########################################################################
+# ^variable our $_parser_loaded
+# ^function _Parser_init
+# ^uses loadMacros
+###########################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_PGessaymacros_pl">
+        <h2>core/PGessaymacros.pl</h2>
+        <pre><code>
+# Makes an essay box and calls essay_cmp()
+# Can be turned off using $pg{specialPGEnvironmentVars}{waiveExplanations}
+# Takes options:
+#   row (or height): height of essay box; defaults to 8
+#   col (or width):  width of essay box;  defaults to 75
+#   message: a message preceding the essay box; default is 'Explain.'
+#   help: boolean for whether to display the essay help message; default is true
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_PGML_pl">
+        <h2>core/PGML.pl</h2>
+        <pre><code>
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+# No indentation for PTX
+# No align for PTX
+# PreTeXt can't use headings.
+# No rule for PTX
+######################################################################
+######################################################################
+######################################################################
+######################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_Value_pl">
+        <h2>core/Value.pl</h2>
+        <pre><code>
+# sub Formula  {Value-&gt;Package("Formula()")-&gt;new(@_)}  # in Parser.pl
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_scaffold_pl">
+        <h2>core/scaffold.pl</h2>
+        <pre><code>
+# Scaffold::Begin() is used to start a new scaffold section, passing
+# it any options that need to be overridden (e.g. is_open, can_open,
+# open_first_section, etc).
+#
+# Problems can include more than one scaffold, if desired,
+# and they can be nested.
+#
+# We save the current PG_OUTPUT, which will be put back during
+# the Scaffold::End() call.  The sections use PG_OUTPUT to create
+# their own text, which is added to the $scaffold-&gt;{output}
+# during the Section::End() call.
+# Scaffold::End() is used to end the scaffold.
+#
+# This puts the scaffold into the page output and opens the sections that should be open.
+# Then the next nested scaffold (if any) is popped off the stack and returned.
+# Report an error and die
+# Create a new Scaffold object.
+#
+# Set the defaults for can_open, is_open, etc., but allow
+# the author to override them.
+# Add a section to the scaffold and give it a unique number (within
+# the scaffold).  Determine its label and save it as current_section
+# so that we know which section is active.
+# Add the content from the current section into the scaffold's output
+# and remove the current_section (so we can tell that no section is open).
+# Record the answers for a section.
+# Scores are obtained when post processing is done.
+# Add the given sections to the list of sections to be opened for this scaffold.
+# Shortcuts for Scaffold data
+# Section::Begin() is used to start a section in the scaffolding,
+# passing it the name of the section and any options (e.g., can_open,
+# is_open, etc.).
+#
+# The section is added to the scaffold, and the names of the answer
+# blanks for previous sections are recorded, along with information
+# about the answer blanks that have evaluators assigned (so we can
+# see which answers belong to this section when it closes).
+# Section::End() is used to end the active section.
+#
+# We get the names of the answer blanks that are in this section,
+# then add the HTML around the section that is used by JavaScript
+# for showing/hiding the section, and finally tell the scaffold
+# that the section is complete (it adds the content to its output).
+# Create a new Section object.
+#
+# It takes default values for can_open, is_open, etc.
+# from the active scaffold.  These can be overridden
+# by the author.
+# Adds the necessary HTML around the content of the section.  Initially a temporary "scaffold-section" tag is added that
+# wraps the content, and that is replaced with the correct HTML in post processing.  The content is also removed in post
+# processing if the scaffold cannot be opened and is not correct.  The $PG_OUTPUT variable holds just the contents of
+# this section, so unshift the opening tags onto the front, and push the closing tags onto the back.  (This is added to
+# the scaffold output when $scaffold-&gt;end_section() is called.)
+# Check if all the answers for this section are correct
+# Perform the can_open check for this section:
+#   If the author supplied code, use it, otherwise use the routine from Section::can_open.
+# Perform the is_open check for this section:
+#   If the author supplied code, use it, otherwise use the routine from Section::is_open.
+# Return a boolean array where a 1 means that answer blank has
+# an answer evaluator assigned to it and 0 means not.
+# Get the names of any of the original answer blanks that now have evaluators attached.
+########################################################################
+# Implements the possible values for the can_open option for scaffolds
+# and sections
+# Always can be opened
+# Can be opened when all the answers from previous sections are correct
+# Can open when previous are correct but this one is not
+# Can open when incorrect
+# Never can be opened
+########################################################################
+# Implements the possible values for the is_open option for scaffolds
+# and sections
+# Every section is open that can be
+# Every incorrect section is open that can be
+# (unless it is the first one, and everything is blank, and
+# the scaffold doesn't have open_first_section set)
+# The first incorrect section is open that can be
+# All correct sections and the first incorrect section
+# are open (that are allowed to be open)
+# No sections are open
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_RserveClient_pl">
+        <h2>core/RserveClient.pl</h2>
+        <pre><code>
+# This used to take a second $local parameter that specified the name of the file that would be saved in the temp
+# directory. That parameter is deprecated and is ignored if given. The problem author should have never been given that
+# choice. Furthermore, if the $local parameter was not specified the remote file name was used which changes every time
+# the problem is rendered.  That is a problem because it results in a different file being saved into the temporary
+# directory every time the problem is rendered.  Instead a unique filename is used that is created via PGresource and
+# PGalias (and so is dependent on the problem seed, psvn, problem UUID, etc.).
+# Returns an REXP's Perl representation, dereferencing it if it's an array reference.  `REXP::to_perl` returns a string
+# scalar for Symbol, undef for Null, and an array reference to contents for all vector types. This function is a utility
+# wrapper to make it easy to assign a Vector's representation to an array variable, while still working sensibly for
+# non-arrays.
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_PGanswermacros_pl">
+        <h2>core/PGanswermacros.pl</h2>
+        <pre><code>
+# FIXME TODO:
+# Document and maybe split out: filters, graders, utilities
+# Until we get the PG cacheing business sorted out, we need to use
+# PG_restricted_eval to get the correct values for some(?) PG environment
+# variables. We do this once here and place the values in lexicals for later
+# access.
+# ^variable my $BR
+# ^variable my $functLLimitDefault
+# ^variable my $functULimitDefault
+# ^variable my $functVarDefault
+# ^variable my $useBaseTenLog
+# ^function _PGanswermacros_init
+# ^uses loadMacros
+# ^uses PG_restricted_eval
+# ^uses $BR
+# ^uses $envir{functLLimitDefault}
+# ^uses $envir{functULimitDefault}
+# ^uses $envir{functVarDefault}
+# ^uses $envir{useBaseTenLog}
+###########################################################################
+###	THE	FOLLOWING ARE LOCAL	SUBROUTINES	THAT ARE MEANT TO BE CALLED	ONLY FROM THIS SCRIPT.
+## Internal routine that converts variables into the standard array format
+##
+## IN:	one of the following:
+##			an undefined value (i.e., no variable was specified)
+##			a reference to an array of variable names -- [var1, var2]
+##			a number (the number of variables desired) -- 3
+##			one or more variable names -- (var1, var2)
+## OUT:	an array of variable names
+# ^function get_var_array
+# ^uses $functVarDefault
+## Internal routine that converts limits into the standard array of arrays format
+##	Some of the cases are probably unneccessary, but better safe than sorry
+##
+## IN:	one of the following:
+##			an undefined value (i.e., no limits were specified)
+##			a reference to an array of arrays of limits -- [[llim,ulim], [llim,ulim]]
+##			a reference to an array of limits -- [llim, ulim]
+##			an array of array references -- ([llim,ulim], [llim,ulim])
+##			an array of limits -- (llim,ulim)
+## OUT:	an array of array references -- ([llim,ulim], [llim,ulim]) or ([llim,ulim])
+# ^function get_limits_array
+# ^uses $functLLimitDefault
+# ^uses $functULimitDefault
+#sub check_option_list {
+#	my $size = scalar(@_);
+#	if( ( $size % 2 ) != 0 ) {
+#		warn "ERROR	in answer evaluator	generator:\n" .
+#			"Usage: &lt;CODE&gt;str_cmp([\$ans1,	\$ans2],%options)&lt;/CODE&gt;
+#			or &lt;CODE&gt;	num_cmp([\$num1, \$num2], %options)&lt;/CODE&gt;&lt;BR&gt;
+#			A list of inputs must be inclosed in square brackets &lt;CODE&gt;[\$ans1, \$ans2]&lt;/CODE&gt;";
+#	}
+#}
+# simple subroutine to display an error message when
+# function compares are called with invalid parameters
+# ^function function_invalid_params
+# ^function clean_up_error_msg
+#formats the student and correct answer as specified
+#format must be of a form suitable for sprintf (e.g. '%0.5g'),
+#with the exception that a '#' at the end of the string
+#will cause trailing zeros in the decimal part to be removed
+# ^function prfmt
+# ^uses is_a_number
+#########################################################################
+# Filters for answer evaluators
+#########################################################################
+# ^function compare_numbers
+# ^uses PG_answer_eval
+# ^uses clean_up_error_msg
+# ^uses prfmt
+# ^uses is_a_number
+# ^function std_num_filter
+# ^uses math_constants
+# ^uses PG_answer_eval
+# ^uses clean_up_error_msg
+# ^function std_num_array_filter
+# ^uses set_default_options
+# ^uses AnswerHash::new
+# ^uses check_syntax
+# ^uses std_num_filter
+# ^function function_from_string2
+# ^uses assign_option_aliases
+# ^uses set_default_options
+# ^uses math_constants
+# ^uses PG_restricted_eval
+# ^uses PG_answer_eval
+# ^uses clean_up_error_msg
+# ^function is_zero_array
+# ^uses is_a_number
+#	Used internally:
+#
+# 	&amp;$determine_param_coeff( $rf_comparison_function # a reference to the correct answer function
+# 	                 $ra_variables                   # an array of the active input variables to the functions
+# 	                 $dim_of_params_space            # indicates the number of parameters upon which the
+# 	                                                 # the comparison function depends linearly.  These are assumed to
+# 	                                                 # be the last group of inputs to the comparison function.
+#
+# 	                 %options                        # $options{debug} gives more error messages
+#
+# 	                                                 # A typical function might look like
+# 	                                                 # f(x,y,z,a,b) = x^2+a*cos(xz) + b*sin(x) with a parameter
+# 	                                                 # space of dimension 2 and a variable space of dimension 3.
+# 	                )
+# 				# returns a list of coefficients
+# ^function best_approx_parameters
+# ^uses set_default_options
+# ^uses pretty_print
+# ^uses Matrix::new
+# ^uses is_a_number
+# ^function calculate_difference_vector
+# ^uses assign_option_aliases
+# ^uses set_default_options
+## $diff *= $options{tolerance}/$options{zeroLevelTol} unless abs($instructorVal) &gt; $options{zeroLevel};
+# /DPVC
+#$diff = ( $inVal - ($correctVal-$instructorVal- $instructorVal ) )/abs($instructorVal)    if abs($instructorVal) &gt; $options{zeroLevel};
+#warn "diff = $diff,   ", abs( &amp;$rf_correct_fun(@inputs) ) , "-- $correctVal";
+# ^function fix_answers_for_display
+# ^uses evaluatesToNumber
+# ^uses AnswerHash::new
+# ^uses check_syntax
+# ^function evaluatesToNumber
+# ^uses is_a_numeric_expression
+# ^uses PG_answer_eval
+# ^uses prfmt
+# ^function is_a_numeric_expression
+# ^uses PG_answer_eval
+# ^function is_a_number
+# ^function is_a_fraction
+# ^function phase_pi
+# ^function is_an_arithmetic_expression
+#
+# ^function math_constants
+# ^function is_array
+# ^function check_syntax
+# ^uses assign_option_aliases
+# ^uses set_default_options
+# ^uses AlgParserWithImplicitExpand::new
+# ^function check_strings
+# ^uses str_filters
+# ^uses str_cmp
+# OVERVIEW of reminder of function:
+# if answer is correct, return correct.  (adjust score to 1)
+# if answer is incorect:
+#	1) determine if the answer is sensible.  if it is, return incorrect.
+#	2) if the answer is not sensible (and incorrect), then return an error message indicating so.
+# no matter what:  throw a 'STRING' error to skip numerical evaluations.  (error flag skips remainder of pre_filters and evaluators)
+# last: 'STRING' post_filter will clear the error (avoiding pink screen.)
+# ^function check_units
+# ^uses str_filters
+# ^uses Units::evaluate_units
+# ^uses clean_up_error_msg
+# ^uses prfmt
+# ^function pretty_print
+# ^uses lex_sort
+# ^uses pretty_print
+# sub pretty_print {
+#     my $r_input = shift;
+#     my $out = '';
+#     if ( not ref($r_input) ) {
+#     	$out = $r_input if defined $r_input;    # not a reference
+#     	$out =~ s/&lt;/&amp;lt;/g  ;  # protect for HTML output
+#     } elsif ("$r_input" =~/hash/i) {  # this will pick up objects whose '$self' is hash and so works better than ref($r_iput).
+# 	    local($^W) = 0;
+#
+# 		$out .= "$r_input " ."&lt;TABLE border = \"2\" cellpadding = \"3\" BGCOLOR = \"#FFFFFF\"&gt;";
+#
+#
+# 		foreach my $key (lex_sort( keys %$r_input )) {
+# 			$out .= "&lt;tr&gt;&lt;TD&gt; $key&lt;/TD&gt;&lt;TD&gt;=&amp;gt;&lt;/td&gt;&lt;td&gt;&amp;nbsp;".pretty_print($r_input-&gt;{$key}) . "&lt;/td&gt;&lt;/tr&gt;";
+# 		}
+#
+#
+#
+# 		$out .="&lt;/table&gt;";
+# 	} elsif (ref($r_input) eq 'ARRAY' ) {
+# 		my @array = @$r_input;
+# 		$out .= "( " ;
+# 		while (@array) {
+# 			$out .= pretty_print(shift @array) . " , ";
+# 		}
+# 		$out .= " )";
+# 	} elsif (ref($r_input) eq 'CODE') {
+# 		$out = "$r_input";
+# 	} else {
+# 		$out = $r_input;
+# 		$out =~ s/&lt;/&amp;lt;/g ;  # protect for HTML output
+# 	}
+# 		$out;
+# }
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_PGbasicmacros_pl">
+        <h2>core/PGbasicmacros.pl</h2>
+        <pre><code>
+#####sub _PGbasicmacros_init { }
+### In this file the _init subroutine is defined further down
+### It actually initializes something!
+# this is equivalent to use strict, but can be used within the Safe compartment
+# Alias for NAMED_ANS_RULE
+# Deprecated
+##############################################
+#   generate_aria_label( $name )
+#   takes the name of an ANS_RULE and generates an appropriate
+#   aria label for screen readers
+##############################################
+##############################################
+#   contained_in( $elem, $array_reference or null separated string);
+#   determine whether element is equal
+#   ( in the sense of eq,  not ==, ) to an element in the array.
+##############################################
+# this is legacy code; use ans_checkbox instead
+# end answer blank macros
+# $main::solutionExists is passed to processProblem which displays a "show Solution" button
+# when a solution is available for viewing
+# End hints and solutions and statement macros
+#################################
+# Add a comment which will display in the Library browser
+#  Currently, the only output is html
+#################################
+#	Produces a random number between $begin and $end with increment 1.
+#	You do not have to worry about integer or floating point types.
+# display macros
+# MODES() is now table driven
+# This replaces M3.  You can add new modes at will to this one.
+# end display macros
+# A utility variable.  Notice that "B" = $ALPHABET[1] and
+# "ABCD" = @ALPHABET[0..3].
+###############################################################
+# Some constants which are different in tex and in HTML
+# The order of arguments is TeX, HTML
+# Adopted Davide Cervone's improvements to PAR, LTS, GTS, LTE, GTE, LBRACE, RBRACE, LB, RB. 7-14-03 AKP
+#sub BR { MODES( TeX =&gt; '\\par\\noindent ', HTML =&gt; '&lt;BR&gt;'); };
+# Alternate definition of BR which is slightly more flexible and gives more white space in printed output
+# which looks better but kills more trees.
+# force a space in latex, doesn't force extra space in html
+###############################################################
+###############################################################
+## Evaluation macros
+#
+#  Look through a string for ``...`` or `...` and use
+#  the parser to produce TeX code for the specified mathematics.
+#  ``...`` does display math, `...` does in-line math.  They
+#  can also be used within math mode already, in which case they
+#  use whatever mode is already in effect.
+#
+# kludge to clean up path names
+## allow underscore character in set and section names and also allows line breaks at /
+#	An example of a macro which prints out a list (with letters)
+# This method is deprecated.  There is no hope for the problems that use it.  Java and flash are dead.
+#  uniq gives unique elements of a list:
+#   More advanced macros
+#This is bare bones code for embedding svg
+# This is bare bones code for embedding png files -- what else should be added? (there are .js scripts for example)
+# This is legacy code.
+# Self closing tags.
+###########
+# Auxiliary macros
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_PGcommonFunctions_pl">
+        <h2>core/PGcommonFunctions.pl</h2>
+        <pre><code>
+#  Make these interact nicely with Parser.pm
+#  Back to main package
+#  Make main versions call the checker to see
+#  which package-specific version to call
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_PGauxiliaryFunctions_pl">
+        <h2>core/PGauxiliaryFunctions.pl</h2>
+        <pre><code>
+# ^uses loadMacros
+# round added 6/12/2000 by David Etlinger. Edited by AKP 3-6-03
+# ^uses Round
+# Round contributed bt Mark Schmitt 3-6-03
+# ^uses gcd
+# ^ function random_pairwise_coprime
+# ^uses gcd
+# VS 6/30/2000
+# VS 7/10/2000
+# VS 8/1/2000  -  slight adaption of code from T. Shemanske of Dartmouth College
+# factorial
+# ^function fact
+# ^uses P
+# return 1 so that this file can be included with require
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_sage_pl">
+        <h2>core/sage.pl</h2>
+        <pre><code>
+# Sage()  is defined as an alias for creating a new sage object.
+## debug code -- uncomment next line -- note that string contains html and must be protected.
+# main::TEXT( "recordAnswerString is ", main::encode_pg_and_html($sage::recordAnswerString), $BR, main::encode_pg_and_html("recordAnswerBlank is |$recordAnswerBlank|"), $BR );
+# Notice that python is white space sensitive so the code
+# needs to be left justified when inserted to
+# avoid indentation errors.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="core_MathObjects_pl">
+        <h2>core/MathObjects.pl</h2>
+        <pre><code>
+# ^uses loadMacros
+        </code></pre>
+    </section>
+<hr>
+    <section id="graph_parserGraphTool_pl">
+        <h2>graph/parserGraphTool.pl</h2>
+        <pre><code>
+# Convert the GraphTool object's options into JSON that can be passed to the JavaScript
+# graphTool method.
+# Produce a hidden answer rule to contain the JavaScript result and insert the graphbox div and
+# JavaScript to display the graph tool.  If a hard copy is being generated, then PGtikz.pl is used
+# to generate a printable graph instead.  An attempt is made to make the printable graph look
+# as much as possible like the JavaScript graph.
+# Modify the student's list answer returned by the graphTool JavaScript to reproduce the
+# JavaScript graph of the student's answer in the "Answer Preview" box of the results table.
+# The raw list form of the answer is displayed in the "Entered" box.
+# Create an answer checker to be passed to ANS().  Any parameters are passed to the checker, as
+# well as any parameters passed in via cmpOptions when the GraphTool object is created.
+# The correct answer is modified to reproduce the JavaScript graph of the correct answer
+# displayed in the "Correct Answer" box of the results table.
+# It is important that the parser::GraphTool object saved in the context flags is not accessed directly in the new
+# method for any package that derives from the GraphTool::GraphObject package.  The objects for correct answers are
+# constructed when the parser::GraphTool "create" method is called, and at that time only the default GraphTool options
+# are available.  If the constructor uses one of those options (for example many of the objects use the bBox option) and
+# that option is later changed when calling the "with" method, then the computations in the constructor will be
+# incorrect and not updated.
+# This should return 0 if the $point is satisfies the defining equation of the object or is on an edge of the object.
+# Otherwise it should return a nonzero number indicating a side or region of the object that the point is in.
+# If $fuzzy is false, then this should return true (or 1) if the $other object is visually the same as this object, and
+# false (or 0) otherwise. If $fuzzy is true, then this should return true if the $other object is visually the same as
+# the object ignoring if one object is solid and the other is dashed, and zero otherwise.
+# This makes the == operator work for GraphTool::GraphObjects. It should usually not be overridden.  Instead override
+# the cmp method above.
+# The TikZ code to draw the object.
+# The TikZ clipping path for the object (used by the inequality fill method) with out the \clip command and its options.
+# The TikZ clipping path for the object (used by the inequality fill method) with the \clip command and options. Most
+# objects only override the clipCode method and let this method add in the default \clip command and inverse clip option
+# based on the fillCmp return value.
+# This method should return discrete values that represent which region the point ($x, $y) is in of the regions the
+# object breaks the plane into.  The same value must be returned for all points in the same region.  This method should
+# return 0 for all points on a border of the object.
+# This is only used by the flood fill algorithm, and should return 1 if $point is on the border of an object, and 0
+# otherwise. This only needs to be overridden if the flood fill algorithm could potentially bleed across a boundary from
+# one region to another (as determined by the return value of the fillCmp method) or the flood fill algorithm could
+# potentially go around an end of the object.
+# This method provides backward compatibility for objects defined the old way not deriving from the
+# GraphTool::GraphObject package. The old methods must be called after construction because they may perform
+# computations using options that are not set to their final values at that time. This is only called once and the
+# results cached for later use.
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserCheckboxList_pl">
+        <h2>parsers/parserCheckboxList.pl</h2>
+        <pre><code>
+# Order the choices (randomizing where requested).
+# Collect the labels from those that have them, and add ones to those that don't (if requested).
+# Find the correct choices in the ordered array
+# Format a label using the user-provided format string
+# Convert a value string into a numeric index.
+# Trim the selected choice or label so that it is not too long to be displayed in the results table.
+# Use the actual choice strings in the output rather than the value string.
+# Adjust student preview and answer strings to be the actual choice strings rather than the value strings.
+# Put normal strings into \text{} and others into \verb
+# Quote HTML special characters
+# Given a choice, a label, or an index into the choices array, return the choice.
+# Get a numeric index (-1 if not defined or not a number).
+# Create the checkbox text
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserRadioButtons_pl">
+        <h2>parsers/parserRadioButtons.pl</h2>
+        <pre><code>
+##################################################################
+#
+#  The package that implements RadioButtons
+#
+#
+#  Set up the main:: namespace
+#
+#
+#  Create a new RadioButtons object
+#
+#
+#  Get the choices into the correct order (randomizing where requested)
+#
+#
+#  Collect the labels from those that have them, and add ones
+#  to those that don't (if requested)
+#
+#
+#  Find the correct choice in the ordered array
+#
+#
+#  Format a label using the user-provided format string
+#
+# Convert a value string into a numeric index.
+#
+#  Trim the selected choice or label so that it is not too long
+#  to be displayed in the results table.
+#
+#
+#  Use the actual choice string rather than the value string as the output
+#
+#
+#  Adjust student preview and answer strings to be the actual
+#  choice string rather than the value string.
+#
+#  Allow users to convert the value string into a choice or label
+#  Include the value string for the correct choice in the answer hash
+##################################################################
+#
+#  Handle old-style options (order, first, last, randomize)
+#
+#
+#  Given a choice, a label, or an index into the choices array,
+#  return the choice.
+#
+#
+#  Get a numeric index (-1 if not defined or not a number)
+#
+#
+#  Create the radio-buttons text
+#
+##################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserLogb_pl">
+        <h2>parsers/parserLogb.pl</h2>
+        <pre><code>
+# Check for numeric arguments
+# Check that the inputs are OK and call the named routine
+# Call the appropriate routine
+# Check that the parameters are OK
+# Compute log base b using log(x)/log(b)
+# If b &lt; 0 or x &lt; 0, either promote to a complex or throw an error.
+# Implement differentiation: (logb(b, u))' -&gt; u'/(u * ln(b)) - b'/(b * ln(u)) * logb(b, u)
+# Output TeX using \log_{b}(x)
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserAutoStrings_pl">
+        <h2>parsers/parserAutoStrings.pl</h2>
+        <pre><code>
+######################################################################
+######################################################################
+######################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserWordCompletion_pl">
+        <h2>parsers/parserWordCompletion.pl</h2>
+        <pre><code>
+# Setup the context and the PopUp() command
+# Create a new WordCompletion object
+# Replacement for Parser::String that takes the complete parse string as its value and gives an error if the answer
+# given is not one of the allowed answers.
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserLinearInequality_pl">
+        <h2>parsers/parserLinearInequality.pl</h2>
+        <pre><code>
+##################################################
+#
+#  Define the subclass of Formula
+#
+#
+#  We already know the vectors are non-zero, so check
+#  if the equations are multiples of each other.
+#
+#
+#  Only compare two equalities
+#
+#
+#  We subclass BOP::equality so that we can give a warning about
+#  things like 1 = 3, and compute the values of inequalities.
+#
+#
+#  We use a special formula object to check if the formula is a
+#  LinearEquality or not, and return the proper class.  This allows
+#  lists of linear equalities, for example.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserRoot_pl">
+        <h2>parsers/parserRoot.pl</h2>
+        <pre><code>
+########################################################################
+########################################################################
+########################################################################
+#
+#  Check for arguments that are an integer and a number
+#
+#
+#  Check that the inputs are OK and call the named routine
+#
+#
+#  Call the appropriate routine
+#
+#
+#  Check that the parameters are OK
+#
+#
+#  Compute root using x**(1/n)
+#  If x &lt; 0 and n is even, either promote x to a complex
+#   or throw an error.
+#  If x &lt; 0 and n is odd, use -(abs(x))**(1/n)
+#
+#
+#  Implement differentiation: (u^(1/n))' -&gt; (1/n)(u^(1/n))^(1-n) * u' - u^(1/n)ln(u)/n^2 * n'
+#  (We use (u^(1/n))^(1-n) rather than u^(1/n-1) so that we have the
+#  same domain as u^(1/n) does originally).
+#
+#
+#  Output TeX using \sqrt[n]{x}
+#
+########################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserFunction_pl">
+        <h2>parsers/parserFunction.pl</h2>
+        <pre><code>
+#
+#  The package that will manage user-defined functions
+#
+#
+#  Check that there are the right number of arguments
+#  and they are of the right type.
+#
+#
+#  Call the function stored in the definition
+#
+#
+#  Check the arguments and compute the result.
+#
+#
+#  Get the name for a number
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserFormulaAnyVar_pl">
+        <h2>parsers/parserFormulaAnyVar.pl</h2>
+        <pre><code>
+#
+#  Create an instance of a FormulaAnyVar.
+#
+##################################################
+#
+#  Implement comparison that first replaces the student
+#  variable by the professor's (if they differ).
+#
+######################################################################
+#
+#  This class replaces the Parser::Variable class, and its job
+#  is to look for new variables that aren't in the context,
+#  and add them in.  This allows students to use ANY variable
+#  they want, even a different one from the professor.  We check
+#  that the student only used ONE variable, however.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserMultiAnswer_pl">
+        <h2>parsers/parserMultiAnswer.pl</h2>
+        <pre><code>
+##################################################
+#  Set flags to be passed to individual answer checkers
+#  Creates an answer checker (or array of same) to be passed
+#  to ANS() or NAMED_ANS().  Any parameters are passed to
+#  the individual answer checkers.
+######################################################################
+#
+#  Get the answer checker used for when all the answers are treated
+#  as a single result.
+#
+#
+#  Check the answers when they are treated as a single result.
+#
+#    First, call individual answer checkers to get any type-check errors
+#    Then perform the user's checker routine
+#    Finally collect the individual answers and errors and combine
+#      them for the single result.
+#
+#
+#  Return a given string or a default if it is empty or not defined
+#
+######################################################################
+#
+#  Answer checker to use for individual entries when singleResult
+#  is not in effect.
+#
+#
+#  Call the correct answer's checker to check for syntax and type errors.
+#  If this is the last one, perform the user's checker routine as well
+#  Return the individual answer (our answer hash is discarded).
+#
+######################################################################
+#
+#  Collect together the correct and student answers, and call the
+#  user's checker routine.
+#
+#  If any of the answers produced errors or the types don't match
+#    don't call the user's routine.
+#  Otherwise, call it, and if there was an error, report that.
+#  Set the individual scores based on the result from the user's routine.
+#
+######################################################################
+#
+#  The user's checker can call setMessage(n,message) to set the error message
+#  for the n-th answer blank.
+#
+# The user's checker can add messages to the single_ans_messages array,
+# which are joined together along with any ans_messages from the
+# individual answers.
+######################################################################
+#
+#  Produce the name for a named answer blank.
+#  (When the singleResult option is true, use the standard name for the first
+#  one, and create the prefixed names for the rest.)
+#
+#
+#  Record an answer-blank name (when using extensions)
+#
+#
+#  Produce an answer rule for the next item in the list,
+#    taking care to use names or extensions as needed
+#    by the settings of the MultiAnswer.
+#
+#
+#  Do the same, but for answer arrays, which are generated by the
+#    Value objects automatically sized to suit their data.
+#    Reset the correct_ans once the array is made
+#
+######################################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserPopUp_pl">
+        <h2>parsers/parserPopUp.pl</h2>
+        <pre><code>
+#
+#  The package that implements pop-up menus
+#
+#
+#  Set up the main:: namespace
+#
+#
+#  Create a new PopUp object
+#
+#
+#  Get the choices into the correct order (randomizing where requested)
+#
+#
+#  Collect the labels and values
+#
+#
+#  Find the correct choice in the ordered array
+#
+# Convert a value string into a numeric index.
+#
+#  Use the actual choice string (aka label) rather than the value string as the output
+#
+#
+#  Adjust student preview and answer strings to be the actual
+#  choice string rather than the value string.
+#
+#  Allow users to convert the value string into a label
+#  Include the value string for the correct choice in the answer hash
+#
+#  Answer rule is the menu list
+#
+#
+# DropDown() variant of PopUp() with placeholder
+#
+#
+# TrueFalse() variant of PopUp()
+#
+##################################################
+#
+#  Replacement for Parser::String that takes the
+#  complete parse string as its value
+#
+##################################################
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserPrime_pl">
+        <h2>parsers/parserPrime.pl</h2>
+        <pre><code>
+##########################################
+#
+#  Package to enable and disable the prime operator
+#
+#
+#  Add prime to the given or current context
+#
+#
+#  Remove prime from the context
+#
+##########################################
+#
+#  Prime operator is a subclass of the unary operator class
+#
+#
+#  Do a typecheck on the operand
+#
+#
+#  A hack to prevent double-primes from inserting parentheses
+#   in string and TeX output (change the precedence to hide it)
+#
+#
+#  Produce a perl version of the derivative
+#
+#
+#  Evaluate the derivative
+#
+#
+#  Reduce by replacing with derivative
+#
+#
+#  Handle derivative by taking derivative of a prime by taking
+#  derivative of the prime's value (which is itself a derivative)
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserOneOf_pl">
+        <h2>parsers/parserOneOf.pl</h2>
+        <pre><code>
+######################################################################
+#
+#  Define the OneOf() creator function
+#
+#
+#  Use Compute() to handle each of the entries so correct_ans will be set
+#   for each entry
+#
+#
+#  Return the type of the first entry (usually these will all be the same)
+#
+#
+#  Try to match against all the entries, and if any one of them matches,
+#  go with it.
+#
+#
+#  Return the class for the first entry
+#
+#
+#  Use the standard cmp_equal, not the list version, since
+#  this acts as a single item not a list.
+#
+#
+#  Check if the student value equals one of the ones in the correct-answer list
+#  and return the result of that comparison if it is correct.
+#  (FIXME: should this check all and return the highest score?)
+#
+#
+#  Produce the correct answer by combining correct answers of the originals.
+#
+#
+#  Produce the string version by making a comma separated list with " or " for the last comma
+#
+#
+#  Produce the TeX version by making a comma separated list with " or " for the last comma
+#
+#
+#  Produce a list of entries separated by $sep with $or as the final separator.
+#  The entries are converted using the given $method of the entry.
+#  If there is a format (or tex_format) flag, use that to format the list instead.
+#
+#
+#  Make a list containing a formula object rather than a
+#  formula returning a list.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserImplicitPlane_pl">
+        <h2>parsers/parserImplicitPlane.pl</h2>
+        <pre><code>
+##################################################
+#
+#  Define the subclass of Formula
+#
+#
+#  We already know the vectors are non-zero, so check
+#  if the equations are multiples of each other.
+#
+#
+#  Only compare two equalities
+#
+#
+#  We subclass BOP::equality so that we can give a warning about
+#  things like 1 = 3
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserRadioMultiAnswer_pl">
+        <h2>parsers/parserRadioMultiAnswer.pl</h2>
+        <pre><code>
+# Convert a value string into a numeric index.
+# Creates an answer evaluator to be passed to ANS() or an array with a label and answer
+# evaluator to be passed to LABELED_ANS().  Any parameters are passed to the individual answer
+# evaluators.  A default checker is supplied if one is not supplied by the problem author.  This
+# checker returns 1 if the student selects the correct radio answer, and all answers in that
+# part are equal to correct answers in that part.
+# Check the answers.  First, call individual answer checkers to get any type-check errors.  Then
+# perform the user's checker routine.  Finally collect the individual answers and errors and
+# combine them for the single result.
+# Return a given string or a default if it is empty or not defined
+# Collect the correct and student answers, and call the user's checker routine.  If any of the
+# answers in the selected part produced errors or the types don't match, don't call the user's
+# routine.  Otherwise, call it, and if there was an error, report that.  Set the score from the
+# supplied checker.
+# The user's checker can call appendMessage(message) to add an error message.
+# Produce the name for an answer blank.  (Use the standard name for the first one, and create
+# the prefixed names for the rest.)
+# Produce the label for a part of the radio answer.
+# Produce the answer rule.
+# Format a label.
+# Start a radio button container.
+# End a radio button container.
+# Record an answer-blank name (when using extensions)
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserFormulaWithUnits_pl">
+        <h2>parsers/parserFormulaWithUnits.pl</h2>
+        <pre><code>
+#
+#  Now uses the version in Parser::Legacy::NumberWithUnits
+#  to avoid duplication of common code.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserAssignment_pl">
+        <h2>parsers/parserAssignment.pl</h2>
+        <pre><code>
+#
+#  FIXME:  allow any variables in declaration
+#  FIXME:  Add more hints when variable name isn't right
+#          or function name or number of arguments isn't right.
+#
+######################################################################
+#
+#  Check that the left operand is a variable and not used on the right
+#
+#
+#  Convert to an Assignment object
+#
+#
+#  Don't count the left-hand variable
+#
+#
+#  Create an Assignment object
+#
+#
+# Display without unwanted parentheses
+#
+#
+#  Add/Remove the Assignment operator to/from a context
+#
+######################################################################
+#
+#  A special List object that holds a variable and a value, and
+#  that prints with an equal sign.
+#
+#
+#  Mark assignments so that they are not treated as lists by classMatch()
+#
+#
+#  Produce proper output
+#
+#
+#  Needed since these are called explicitly without an object
+#
+#
+#  Class is an a variable assigned to whatever
+#
+#
+#  Return the proper type
+#
+######################################################################
+#
+#  A subclass of Formula that does typematching properly for Assignments
+#  (the match is against the right-hand sides)
+#
+#
+#  Convert varaible names to those used in the correct answer, if the
+#  student answer uses different ones
+#
+######################################################################
+#
+#  A dummy function that is used for assignments like f(x) = x^2
+#
+        </code></pre>
+    </section>
+<hr>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculus Macros Index</title>
+</head>
+<body>
+    <a href="index.html">← Back to Master Index</a>
+    <h1>Calculus Specialized Macro Modules</h1>
+    <section id="math_PGdiffeqmacros_pl">
+        <h2>math/PGdiffeqmacros.pl</h2>
+        <pre><code>
+#!/usr/bin/perl -w
+#my @answer = oldivy(1,2,1,8,4);
+#print ("The old program says:\n");
+#print ($answer[0]);
+#print ("\n");
+#@answer = ivy(1,2,1,8,4);
+#print ("My program says:\n");
+#print ($answer[0]);
+#print ("\n");
+#the subroutine is invoked with arguments such as complexmult(2,3,4,5) or
+#complexmult(@data), where @data = (2,3,4,5)
+##########
+# sub addtwo adds two strings formally
+# An "indicator"  for a string is a
+#  number ,e.g. coefficient,which indicates
+# whether the string is to be
+# added or is to be regarded as zero.
+# The  non-zero terms are formally added as strings.
+# The input is an array
+# ($1staddend, $1stindicator,$2ndaddend,$2ndindicator)
+# The return is an array
+# (formal sum, indicator of formal sum)
+########
+# sub add generalizes sub addtwo to more addends.
+# It formally adds the nonzero terms.
+# The input is an array of even length
+# consisting of each addend,a string,
+# followed by its indicator.
+#######
+# sub diffop cleans up the typed expression
+# of a diff. operator.
+# input @diffop =($A,$B,$C) is the coefficients.
+# input is given as arguments viz difftop($A,$B,$C);
+# output is the diff. operator as a string $L in TEX
+########
+# sub rad simplifies (a/b)*(sqrt(c))
+# input is given as arguments on rad viz.: rad($a,$b,$c);
+# $a,$b,$c are integers and $c&gt;=0 and $b is not zero.
+# output is an array =(answer as string,new$a,new$b, new$c)
+##########
+##########
+####
+# sub exp simplifies exp($r*t) in form for writing perl
+# or tex. The input is exp($r,$ind); $ind indicates whether
+# we want perl or tex mode. $r is a string that represents
+# a number.
+# If $ind = 0  output is "exp(($r)*t)", simplified if possible.
+# If $ind = 1  output is "exp(($r)*t)", simplified if possible.
+# y(t) = me^(-Bt/(2A))*cos(t*sqrt(4AC-B*B)/(2A))+(2An+Bm)*sqrt(4AC-B*B)/(4AC-B*B)*e^(-Bt/(2A))*sin(t*sqrt(4AC-B*B)/(2A))
+############
+#sub ivy solves the initial value problem
+# $a*y'' + $b*y' + $c*y = 0, with  y(0) = $m,  y'(0) = $n
+#The numbers $a,$b,$c,$m,$n should be integers with $a not 0.
+#The inputs are given as arguments viz: ivy ($a,$b,$c,$m,$n).
+#The output is the solution as a string giving a function of t.
+#################
+# undeterminedSin is a subroutine to solve
+# undetermined coefficient problems that have
+# sines and cosines.
+# The input is an array ($A,$B,$C,$r,$w,$q1,$q0,$r1,$r0)
+# given as arguments on undeterminedSin
+# $L =$A y'' + $B y' + $C y
+# $rhs = ($q1 t + $q0) cos($w t)exp($r t) +
+#        ($r1 t + $r0) sin($w t)exp($r t)
+# The subroutine uses undetermined coefficients
+# to find a solution $y of $L = $rhs .
+# The output \is $y
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserSolutionFor_pl">
+        <h2>parsers/parserSolutionFor.pl</h2>
+        <pre><code>
+#
+#  Create a SolutionFor object of the correct type
+#
+######################################################################
+#
+#  Define the new class (we make subclasses below)
+#  (we need subclasses in order to make things work
+#  properly with single-variable complex or real-valued
+#  equations)
+#
+#
+#  Evaluate the formula on the given point
+#
+#
+#  The name of this object for error messages
+#
+#
+#  Do a comparison by testing if the formula's equality
+#  operation returns true or false.
+#  (Since we are implementing &lt;=&gt; here, we need
+#  to return 0 when true and 1 when false.)
+#
+#
+#  Set up a new context that is a copy of the current one, but
+#  has the equality operator defined, and the SolutionFor object
+#  prededence set so that comparisons with points or numbers will
+#  be promoted to comparisons with the SolutionFor
+#
+######################################################################
+#
+#  A separate class for Reals, to get Value::Real in the ISA list
+#
+#
+#  Pass the real number directly
+#
+######################################################################
+#
+#  A separate class for Complexes
+#
+#
+#  Pass the complex number directly
+#
+######################################################################
+#
+#  A separate class for Points
+#
+#
+#  Use the Point's defaults, but turn off coordinate hints
+#  (since a wrong coordinate isn't detectable)
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserFormulaUpToConstant_pl">
+        <h2>parsers/parserFormulaUpToConstant.pl</h2>
+        <pre><code>
+#
+#  Create an instance of a FormulaUpToConstant.  If no constant
+#  is supplied, we add C ourselves.
+#
+##################################################
+#
+#  Remember that compare implements the overloaded perl &lt;=&gt; operator,
+#  and $a &lt;=&gt; $b is -1 when $a &lt; $b, 0 when $a == $b and 1 when $a &gt; $b.
+#  In our case, we only care about equality, so we will return 0 when
+#  equal and other numbers to indicate the reason they are not equal
+#  (this can be used by the answer checker to print helpful messages)
+#
+#
+#  Return the {adapt} formula with test points adjusted
+#
+#
+#  Inherit from the main FormulaUpToConstant, but
+#  adjust the test points to include the constants
+#
+#
+#  Insert dummy values for the constants for the test points
+#  (These are supposed to be +C, so the value shouldn't matter?)
+#
+##################################################
+#
+#  Here we override part of the answer comparison
+#  routines in order to be able to generate
+#  helpful error messages for students when
+#  they leave off the + C.
+#
+#
+#  Show hints by default
+#
+#
+#  Provide diagnostics based on the adapted function used to check
+#  the student's answer
+#
+#
+#  Make it possible to graph single-variable formulas by setting
+#  the arbitrary constants to 0 first.
+#
+#
+#  Add useful messages, if the author requested them
+#
+#
+#  Don't perform equivalence check
+#
+##################################################
+#
+#  Get the name of the constant
+#
+#
+#  Remove the constant and return a Formula object
+#
+#
+#  Override the differentiation so that we always return
+#  a Formula, not a FormulaUpToConstant (we don't want to
+#  add the C in again).
+#
+######################################################################
+#
+#  This class replaces the Parser::Variable class, and its job
+#  is to look for new constants that aren't in the context,
+#  and add them in.  This allows students to use ANY constant
+#  they want, and a different one from the professor.  We check
+#  that the student only used ONE arbitrary constant, however.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserParametricPlane_pl">
+        <h2>parsers/parserParametricPlane.pl</h2>
+        <pre><code>
+#
+#  Define the subclass of Formula
+#
+#
+#  Report some errors that were stopped by the showEqualErrors=&gt;0 above.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserLinearRelation_pl">
+        <h2>parsers/parserLinearRelation.pl</h2>
+        <pre><code>
+##################################################
+#
+#  Initialize the contexts and make the creator function.
+#
+#    $R = LinearRelation("x + y + 2z &lt;= 5");
+#    $R = Formula("x + y + 2z &lt;= 5");
+#    $R = Compute("x + y + 2z &lt;= 5");
+#    $R = LinearRelation([1,2,1], [1,1,2], "&lt;=");
+#    $R = LinearRelation([1,2,1], 5, "&lt;=");
+#
+#  If the vectors are zero, check if true or false
+#  If the vectors are non-zero, check if the equations are multiples of each other.
+#
+#
+#  Only compare two relations
+#
+#
+#  We subclass BOP::equality so that we can assign a type using _check and
+#  override the _eval method for relation operators
+#
+#
+#  We use a special formula object to check if the formula is a
+#  LinearRelation or not, and return the proper class.  This allows
+#  lists of linear relations, for example.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserImplicitEquation_pl">
+        <h2>parsers/parserImplicitEquation.pl</h2>
+        <pre><code>
+#
+#  Create the ImplicitEquation package
+#
+#
+#  Override the comparison method.
+#
+#  Turn the right-hand equation into an ImplicitEquation.  This creates
+#  the test points (i.e., finds the solution points).  Then check
+#  the professor's function on the student's test points and the
+#  student's function on the professor's test points.
+#
+#
+#  Use the original equation for these (but not for perl(), since we
+#  need that to use perlFunction).
+#
+#
+#  Locate points that satisfy the equation
+#
+#
+#  Get random points and sort them by sign of the function.
+#  Also, get the average function value, and indicate if
+#  we actually did find both positive and negative values.
+#
+#
+#  Make a list of positive and negative points sorted by
+#  the distance between them.  Also return the average distance
+#  between points.
+#
+#
+#  Use bisection algorithm to find a point where the function is zero
+#  (i.e., where the original equation is an equality)
+#  If we can't find a point (e.g., we are at a discontinuity),
+#  return an undefined value.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserParametricLine_pl">
+        <h2>parsers/parserParametricLine.pl</h2>
+        <pre><code>
+#
+#  Define the subclass of Formula
+#
+#  Two parametric lines are equal if they have
+#  parallel direction vectors and either the same
+#  points or the vector between the points is
+#  parallel to the (common) direction vector.
+#
+#  Report some errors that were stopped by the showEqualErrors=&gt;0 above.
+#
+        </code></pre>
+    </section>
+<hr>
+    <section id="parsers_parserFunctionPrime_pl">
+        <h2>parsers/parserFunctionPrime.pl</h2>
+        <pre><code>
+#
+#  The package that will manage function primes
+#
+#
+#  Override the Parser::Function new() method to handle names with primes.
+#  When such a name appears, define a new (hidden) parserFunction that
+#  has the proper function and formula for the number of derivatives
+#  requested.
+#
+        </code></pre>
+    </section>
+<hr>
+</body>
+</html>
