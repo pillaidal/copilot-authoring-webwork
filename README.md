@@ -87,20 +87,6 @@ For a specific authoring task:
 6. Prefer standard PG functionality over bespoke code.
 
 
-## Detailed PG Macro Knowledge
- 
-The detailed WeBWorK PG macro catalogue is available here:
- 
-**./macros/**
- 
-This catalogue contains searchable information about PG macros and
-facilities for PG 2.20 authoring, including MathObjects, statistics,
-graphing, tables, choices, grading, PGML, utilities, and other
-specialized authoring capabilities.
- 
-Copilot should use this catalogue to discover appropriate PG facilities,
-then verify production-critical syntax and PG 2.20 compatibility against
-the official openwebwork/pg repository.   
 
 Examples of authoring tasks include:
 
@@ -124,4 +110,22 @@ If the available sources do not establish a PG feature or syntax reliably, do no
 
 State what could not be verified and either use a verified alternative or identify what requires testing on the local WeBWorK installation.
 
+## Detailed PG Macro Knowledge
+ 
+The detailed WeBWorK PG macro catalogue is available here:
+ 
+**./macros/**
+ 
+This catalogue contains searchable information about PG macros and
+facilities for PG 2.20 authoring, including MathObjects, statistics,
+graphing, tables, choices, grading, PGML, utilities, and other
+specialized authoring capabilities.
+ 
+Use this catalogue to discover appropriate PG facilities, then verify
+production-critical syntax and PG 2.20 compatibility against the
+official openwebwork/pg repository.
+
 KNOWLEDGE_VERSION: 2026-10-07-0845
+---
+
+
