@@ -13,7 +13,7 @@ jobs:
       - name: Submit to IndexNow
         uses: bojieyang/indexnow-action@v3
         with:
-          # Points directly to the live text-based sitemap in your repo
+          # Fixed to point to your actual public sitemap file
           sitemap-location: "https://github.io"
-          # References the secret key you just created
-          key: ${{ secrets.indexme }}
+          # Fixed to match the exact secret name from your screenshot
+          key: ${{ secrets.INDEXNOW_KEY }}
