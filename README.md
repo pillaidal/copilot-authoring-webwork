@@ -86,6 +86,22 @@ For a specific authoring task:
 5. Look for authoritative Open Problem Library examples when an established usage pattern would help.
 6. Prefer standard PG functionality over bespoke code.
 
+
+## Detailed PG Macro Knowledge
+ 
+The detailed WeBWorK PG macro catalogue is available here:
+ 
+**./macros/**
+ 
+This catalogue contains searchable information about PG macros and
+facilities for PG 2.20 authoring, including MathObjects, statistics,
+graphing, tables, choices, grading, PGML, utilities, and other
+specialized authoring capabilities.
+ 
+Copilot should use this catalogue to discover appropriate PG facilities,
+then verify production-critical syntax and PG 2.20 compatibility against
+the official openwebwork/pg repository.   
+
 Examples of authoring tasks include:
 
 - numerical answers and tolerances
