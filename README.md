@@ -107,3 +107,5 @@ Examples of authoring tasks include:
 If the available sources do not establish a PG feature or syntax reliably, do not guess.
 
 State what could not be verified and either use a verified alternative or identify what requires testing on the local WeBWorK installation.
+
+KNOWLEDGE_VERSION: 2026-10-07-0845
