@@ -1,0 +1,19 @@
+name: "IndexNow Automation"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering if needed
+
+jobs:
+  submit-urls:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Submit to IndexNow
+        uses: bojieyang/indexnow-action@v3
+        with:
+          # Points directly to the live text-based sitemap in your repo
+          sitemap-location: "https://github.io"
+          # References the secret key you just created
+          key: ${{ secrets.indexme }}
